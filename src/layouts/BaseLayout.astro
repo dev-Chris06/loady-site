@@ -1,0 +1,86 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Loady — Tes vidéos, directement sur ton téléphone",
+  description = "Copie un lien, choisis la qualité disponible et retrouve tes vidéos comme des fichiers sur ton téléphone avec Loady pour Android.",
+} = Astro.props;
+const siteUrl = Astro.site?.toString();
+---
+<!doctype html>
+<html lang="fr" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080b12" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index,follow" />
+    {siteUrl && <link rel="canonical" href={siteUrl} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Loady" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {siteUrl && <meta property="og:url" content={siteUrl} />}
+    <title>{title}</title>
+    <script is:inline>
+      (() => {
+        try {
+          const saved = localStorage.getItem("loady-theme");
+          const systemDark = matchMedia("(prefers-color-scheme: dark)").matches;
+          document.documentElement.dataset.theme = saved || (systemDark ? "dark" : "light");
+        } catch {
+          document.documentElement.dataset.theme = "dark";
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Aller au contenu</a>
+    <slot />
+    <script>
+      const root = document.documentElement;
+      const toggle = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
+      const menu = document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+      const nav = document.querySelector<HTMLElement>("[data-nav-links]");
+      const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+
+      const updateThemeButton = () => {
+        if (!toggle) return;
+        const dark = root.dataset.theme === "dark";
+        themeColor?.setAttribute("content", dark ? "#080b12" : "#f5f7fb");
+        toggle.setAttribute("aria-label", dark ? "Activer le thème clair" : "Activer le thème sombre");
+        toggle.innerHTML = dark
+          ? '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>'
+          : '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.9 13A8.5 8.5 0 0 1 11 3.1 8.5 8.5 0 1 0 20.9 13Z"/></svg>';
+      };
+
+      updateThemeButton();
+      toggle?.addEventListener("click", () => {
+        const theme = root.dataset.theme === "dark" ? "light" : "dark";
+        root.dataset.theme = theme;
+        try { localStorage.setItem("loady-theme", theme); } catch { /* Storage may be disabled. */ }
+        updateThemeButton();
+      });
+
+      menu?.addEventListener("click", () => {
+        const expanded = menu.getAttribute("aria-expanded") === "true";
+        menu.setAttribute("aria-expanded", String(!expanded));
+        menu.setAttribute("aria-label", expanded ? "Ouvrir le menu" : "Fermer le menu");
+        nav?.setAttribute("data-open", String(!expanded));
+      });
+
+      nav?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => {
+        menu?.setAttribute("aria-expanded", "false");
+        menu?.setAttribute("aria-label", "Ouvrir le menu");
+        nav.setAttribute("data-open", "false");
+      }));
+    </script>
+  </body>
+</html>
