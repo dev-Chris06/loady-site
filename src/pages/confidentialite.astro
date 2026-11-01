@@ -1,0 +1,88 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { contact, links, privacyUpdated } from "../data/site";
+---
+
+<BaseLayout
+  title="Politique de confidentialité — Loady"
+  description="Quelles données l’application Loady et son site utilisent, pourquoi, avec quels services, et comment exercer tes droits."
+>
+  <SiteHeader />
+
+  <main id="main">
+    <article class="container legal">
+      <span class="eyebrow">Confidentialité</span>
+      <h1>Politique de confidentialité</h1>
+      <p class="legal-updated">Dernière mise à jour : {privacyUpdated}</p>
+
+      <p>Cette page explique quelles données l’application Android <strong>Loady</strong> et ce site utilisent, pourquoi, et ce que tu peux faire. En résumé : Loady ne te demande aucun compte, tes liens et tes fichiers restent sur ton téléphone, et l’app envoie des statistiques d’utilisation à Firebase (Google).</p>
+
+      <h2>Qui est responsable</h2>
+      <p>Loady est édité par <a href="/#equipe">l’équipe Loady</a>. Pour toute question sur tes données, contacte-nous via <a href={contact.href}>{contact.label}</a>.{contact.href.startsWith("mailto:") ? "" : " N’y publie aucune information personnelle : une issue GitHub est publique."}</p>
+
+      <h2>Ce qui reste sur ton téléphone</h2>
+      <ul>
+        <li><strong>Les liens que tu colles</strong> et l’analyse de ces liens.</li>
+        <li><strong>Les fichiers téléchargés</strong>, enregistrés par défaut dans <code>Download/Loady</code> ou dans le dossier que tu choisis.</li>
+        <li><strong>L’historique et tes réglages</strong> (thème, dossier, dernière analyse).</li>
+      </ul>
+      <p>L’équipe Loady n’a pas accès à ces données. Les supprimer dans l’app, ou désinstaller Loady, les efface de ton téléphone (les fichiers téléchargés restent dans ton dossier tant que tu ne les supprimes pas).</p>
+
+      <h2>Les plateformes que tu utilises</h2>
+      <p>Pour télécharger une vidéo, Loady contacte directement la plateforme concernée (YouTube, TikTok, Instagram…), comme le ferait ton navigateur. Cette plateforme reçoit donc la demande et ton adresse IP, selon ses propres règles de confidentialité. Rien ne passe par un serveur de l’équipe Loady.</p>
+
+      <h2>Données envoyées par l’app</h2>
+      <table class="legal-table">
+        <thead><tr><th>Service</th><th>Données</th><th>Pourquoi</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Google Analytics pour Firebase (Google)</td>
+            <td>Ouverture de l’app ; pour chaque analyse ou téléchargement : le nom de la plateforme (par exemple <code>youtube.com</code>, jamais le lien complet), le format choisi, la taille du fichier et, en cas d’échec, un code d’erreur ; le résultat des mises à jour du moteur de téléchargement. Firebase y ajoute automatiquement un identifiant propre à ton installation, le modèle de ton téléphone, la version d’Android, la langue, le pays approximatif et, si ton téléphone l’autorise, l’identifiant publicitaire Android.</td>
+            <td>Savoir quelles plateformes fonctionnent, repérer les erreurs et améliorer l’app. Pas de publicité.</td>
+          </tr>
+          <tr>
+            <td>Firebase Cloud Messaging (Google)</td>
+            <td>Un jeton technique qui identifie ton installation pour les notifications.</td>
+            <td>T’envoyer les annonces de l’équipe (nouvelle version, information importante). Tu peux couper les notifications de Loady dans les réglages d’Android.</td>
+          </tr>
+          <tr>
+            <td>GitHub</td>
+            <td>Une requête toutes les heures environ, et lors des mises à jour (app ou moteur de téléchargement), qui transmet ton adresse IP à GitHub.</td>
+            <td>Vérifier s’il existe une nouvelle version et la télécharger.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Ces services sont fournis par Google et GitHub (Microsoft), qui peuvent traiter les données hors de ton pays, notamment aux États-Unis. Leurs politiques : <a href="https://firebase.google.com/support/privacy">Firebase</a>, <a href="https://policies.google.com/privacy">Google</a>, <a href="https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement">GitHub</a>.</p>
+      <p>Loady ne vend aucune donnée, n’affiche pas de publicité et ne demande ni ton nom, ni ton adresse e-mail, ni ton numéro de téléphone.</p>
+
+      <h2>Permissions demandées par l’app</h2>
+      <ul>
+        <li><strong>Internet</strong> : analyser les liens et télécharger les vidéos.</li>
+        <li><strong>Notifications</strong> : afficher la progression, la fin des téléchargements et les annonces.</li>
+        <li><strong>Service au premier plan</strong> : continuer un téléchargement quand tu quittes l’app.</li>
+        <li><strong>Stockage</strong> (Android 9 et plus ancien uniquement) : enregistrer les fichiers.</li>
+      </ul>
+
+      <h2>Durée de conservation</h2>
+      <p>Les données locales restent sur ton téléphone jusqu’à ce que tu les supprimes ou désinstalles Loady. Les statistiques Firebase sont conservées par Google pendant la durée de conservation réglée dans le projet Firebase de Loady, puis supprimées.</p>
+
+      <h2>Tes droits</h2>
+      <p>Selon la loi de ton pays (par exemple le RGPD en Europe ou la loi béninoise sur les données personnelles), tu peux demander l’accès à tes données, leur correction ou leur suppression, et t’opposer à leur traitement. Pour cela, contacte-nous via <a href={contact.href}>{contact.label}</a>. Désinstaller Loady arrête toute collecte et remet à zéro l’identifiant Firebase de ton installation.</p>
+
+      <h2>Ce site</h2>
+      <p>Ce site n’utilise ni cookies ni outil de mesure d’audience. Il est hébergé par Vercel, qui reçoit ton adresse IP pour afficher les pages. Il charge depuis GitHub les informations de la dernière version, les photos de profil de l’équipe et, si tu cliques, le fichier APK. Ton choix de thème clair ou sombre est gardé dans ton navigateur.</p>
+
+      <h2>Enfants</h2>
+      <p>Loady ne s’adresse pas spécialement aux enfants et ne collecte pas sciemment de données sur eux.</p>
+
+      <h2>Modifications</h2>
+      <p>Si l’app change sa façon d’utiliser les données, cette page sera mise à jour et sa date changée. Les versions précédentes restent visibles dans l’<a href="https://github.com/dev-Chris06/loady-site/commits/main/src/pages/confidentialite.astro">historique du site</a>.</p>
+
+      <p><a href="/">← Retour à l’accueil</a> · <a href={links.repo}>Code source de Loady</a></p>
+    </article>
+  </main>
+
+  <SiteFooter />
+</BaseLayout>

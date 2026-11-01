@@ -1,8 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { links, minAndroid, team } from "../data/site";
 
-const apkUrl = "https://github.com/DazBot13-boopt/dazdownloader/releases/latest/download/app-arm64-v8a-release.apk";
-const releaseUrl = "https://github.com/DazBot13-boopt/dazdownloader/releases/latest";
+const apkUrl = links.apkArm64;
+const releaseUrl = links.releases;
 const platforms = ["YouTube", "TikTok", "Instagram", "Snapchat", "Facebook", "X", "Pinterest", "Threads"];
 const screens = [
   { src: "/images/11.jpg", alt: "Loady affiche l’aperçu d’une vidéo et les qualités disponibles", title: "Choisis ce qui te convient", caption: "Les options disponibles pour ce lien" },
@@ -13,27 +16,7 @@ const screens = [
 ---
 
 <BaseLayout>
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="brand" href="#accueil" aria-label="Loady, accueil">
-        <img class="brand-logo" src="/favicon.svg" alt="" width="37" height="37" />
-        Loady
-      </a>
-      <nav class="nav-links" id="primary-navigation" data-nav-links aria-label="Navigation principale">
-        <a href="#comment">Comment ça marche</a>
-        <a href="#fonctionnalites">Fonctionnalités</a>
-        <a href="#plateformes">Plateformes</a>
-        <a href="#faq">FAQ</a>
-      </nav>
-      <div class="nav-actions">
-        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Changer le thème" title="Changer le thème"></button>
-        <a class="button button-primary header-download" href={apkUrl} download>Télécharger l’APK <span aria-hidden="true">↗</span></a>
-        <button class="menu-toggle" type="button" data-menu-toggle aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="primary-navigation">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
-        </button>
-      </div>
-    </div>
-  </header>
+  <SiteHeader />
 
   <main id="main">
     <section class="hero" id="accueil">
@@ -134,8 +117,49 @@ const screens = [
     <section class="section" id="confidentialite">
       <div class="container">
         <div class="privacy-panel">
-          <div><span class="eyebrow">Ta vie privée compte</span><h2>Des fichiers sur ton téléphone. Une politique claire.</h2><p>Loady est pensé pour retrouver tes téléchargements sur ton appareil. Consulte les informations détaillées sur les données et services utilisés.</p></div>
-          <a class="button button-secondary" href="#faq">Voir les réponses <span aria-hidden="true">→</span></a>
+          <div>
+            <span class="eyebrow">Ta vie privée compte</span><h2>Des fichiers sur ton téléphone. Une politique claire.</h2>
+            <ul class="privacy-points">
+              <li>Pas de compte : tes liens et tes fichiers restent sur ton téléphone.</li>
+              <li>Des statistiques d’utilisation via Firebase (Google), sans les liens que tu colles.</li>
+              <li>Des notifications pour les annonces de l’équipe.</li>
+              <li>Une vérification des nouvelles versions sur GitHub.</li>
+            </ul>
+          </div>
+          <a class="button button-secondary" href="/confidentialite/">Lire la politique complète <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="installer">
+      <div class="container">
+        <span class="eyebrow">Installation</span>
+        <h2 class="section-heading">Installer Loady<br />en quelques minutes.</h2>
+        <p class="section-copy">Loady n’est pas encore sur les stores : tu l’installes à partir du fichier APK officiel publié sur GitHub. Il faut {minAndroid} ou plus récent.</p>
+        <div class="install-layout">
+          <ol class="install-steps">
+            <li><strong>Télécharge l’APK</strong><span>Depuis ton téléphone Android, avec le bouton ci-contre. Le fichier fait environ 60 à 70 Mo.</span></li>
+            <li><strong>Ouvre le fichier</strong><span>Touche la notification de fin de téléchargement, ou retrouve le fichier dans le dossier Téléchargements.</span></li>
+            <li><strong>Autorise l’installation</strong><span>Si Android le demande, autorise ton navigateur ou ton gestionnaire de fichiers à installer des applications. Tu peux retirer cette autorisation ensuite.</span></li>
+            <li><strong>Installe et ouvre Loady</strong><span>Loady te prévient lui-même quand une nouvelle version est disponible.</span></li>
+          </ol>
+          <div class="download-card">
+            <p class="download-card-title">Dernière version<span data-release-version data-prefix=" : "></span></p>
+            <a class="button button-primary" href={apkUrl} download>
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 17v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              APK pour la plupart des téléphones
+            </a>
+            <p class="download-card-meta">64 bits (arm64) <span data-release-size="app-arm64-v8a-release.apk"></span></p>
+            <a class="download-alt" href={links.apkArmv7} download>APK pour téléphone ancien ou d’entrée de gamme (32 bits)</a>
+            <p class="download-card-meta">armeabi-v7a <span data-release-size="app-armeabi-v7a-release.apk"></span></p>
+            <p class="download-card-help">Si l’installation échoue avec le premier fichier (« application non compatible »), prends la version 32 bits.</p>
+          </div>
+        </div>
+        <div class="faq-list install-help">
+          <details><summary>« Application non installée » ou « non compatible »</summary><p>Ton téléphone est probablement en 32 bits : télécharge l’APK 32 bits ci-dessus. Vérifie aussi que tu as {minAndroid} ou plus récent.</p></details>
+          <details><summary>Le fichier ne s’ouvre pas ou semble abîmé</summary><p>Le téléchargement a sans doute été interrompu. Supprime le fichier et recommence, de préférence en Wi-Fi.</p></details>
+          <details><summary>La mise à jour est refusée</summary><p>Prends toujours l’APK sur ce site ou sur la page GitHub officielle : un APK venant d’ailleurs n’a pas la même signature et Android refusera de remplacer ton installation.</p></details>
+          <details><summary>Je suis sur ordinateur ou sur iPhone</summary><p>Loady fonctionne uniquement sur Android. Ouvre cette page sur ton téléphone Android pour télécharger l’APK.</p></details>
         </div>
       </div>
     </section>
@@ -145,12 +169,26 @@ const screens = [
         <span class="eyebrow">Questions fréquentes</span>
         <h2 class="section-heading">Avant de commencer.</h2>
         <div class="faq-list">
-          <details><summary>Loady est disponible sur quel appareil ?</summary><p>Loady est une application Android distribuée au format APK. Vérifie la version minimale d’Android indiquée sur la page de téléchargement avant l’installation.</p></details>
-          <details><summary>Comment installer l’APK ?</summary><p>Télécharge l’APK depuis le lien officiel, ouvre le fichier et suis les instructions d’Android. Ton appareil peut te demander d’autoriser temporairement l’installation depuis ton navigateur.</p></details>
-          <details><summary>Où sont enregistrés les fichiers ?</summary><p>Les téléchargements sont enregistrés sur ton téléphone. Leur emplacement exact peut dépendre des réglages de Loady et de la version d’Android utilisée.</p></details>
+          <details><summary>Loady est disponible sur quel appareil ?</summary><p>Loady est une application Android ({minAndroid} ou plus récent), distribuée pour l’instant au format APK. Elle n’existe pas sur iPhone.</p></details>
+          <details><summary>Comment installer l’APK ?</summary><p>Télécharge l’APK depuis le lien officiel, ouvre le fichier et suis les instructions d’Android. Ton appareil peut te demander d’autoriser temporairement l’installation depuis ton navigateur. Le détail est dans la section <a href="#installer">Installer</a>.</p></details>
+          <details><summary>Où sont enregistrés les fichiers ?</summary><p>Par défaut, dans le dossier Téléchargements, sous Loady (<code>Download/Loady</code>). Tu peux choisir un autre dossier dans les réglages de l’app.</p></details>
           <details><summary>Quels formats et qualités sont disponibles ?</summary><p>Les options varient selon la vidéo et sa source. Loady affiche les formats et qualités disponibles pour le lien que tu as copié.</p></details>
           <details><summary>Pourquoi un lien peut-il ne pas fonctionner ?</summary><p>Un média privé, supprimé, protégé ou temporairement indisponible peut ne pas être accessible. La compatibilité peut aussi évoluer avec les changements des plateformes.</p></details>
           <details><summary>Puis-je télécharger n’importe quelle vidéo ?</summary><p>Respecte les droits d’auteur, les conditions des plateformes et les lois applicables. Télécharge uniquement les contenus que tu es autorisé à enregistrer.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="equipe">
+      <div class="container">
+        <span class="eyebrow">L’équipe Loady</span>
+        <h2 class="section-heading">Qui fait Loady.</h2>
+        <p class="section-copy">Loady est développé par une petite équipe. Le code source est public sur GitHub.</p>
+        <div class="team-grid">
+          {team.map((member) => <a class="team-card" href={`https://github.com/${member.github}`}>
+            <img src={`https://github.com/${member.github}.png?size=96`} alt="" width="48" height="48" loading="lazy" decoding="async" />
+            <span><strong>{member.name}</strong><small>@{member.github} sur GitHub</small></span>
+          </a>)}
         </div>
       </div>
     </section>
@@ -164,19 +202,30 @@ const screens = [
           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 17v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Télécharger l’APK Android
         </a>
-        <small>Source officielle : GitHub · <a href={releaseUrl}>autres versions et architectures</a></small>
+        <small>{minAndroid} ou plus récent<span data-release-version data-prefix=" · version "></span> · source officielle : GitHub<br /><a href="#installer">Aide à l’installation et version 32 bits</a> · <a href={releaseUrl}>page de la version</a></small>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div><a class="brand" href="#accueil"><img class="brand-logo" src="/favicon.svg" alt="" width="37" height="37" />Loady</a><p class="footer-meta">Tes vidéos, directement sur ton téléphone.</p></div>
-      <nav class="footer-links" aria-label="Liens de pied de page">
-        <a href="#confidentialite">Confidentialité</a>
-        <a href={releaseUrl}>Code et versions</a>
-        <a href="#telechargement">Installer Loady</a>
-      </nav>
-    </div>
-  </footer>
+  <SiteFooter />
 </BaseLayout>
+
+<script>
+  import { links } from "../data/site";
+
+  // Fill in the latest version and file sizes. The page stays usable without it.
+  type Asset = { name: string; size: number };
+  fetch(links.latestReleaseApi, { headers: { Accept: "application/vnd.github+json" } })
+    .then((response) => (response.ok ? response.json() : Promise.reject(response.status)))
+    .then((release: { tag_name?: string; assets?: Asset[] }) => {
+      const version = release.tag_name?.replace(/^v/, "");
+      if (version) {
+        document.querySelectorAll<HTMLElement>("[data-release-version]").forEach((el) => { el.textContent = `${el.dataset.prefix ?? ""}${version}`; });
+      }
+      document.querySelectorAll<HTMLElement>("[data-release-size]").forEach((el) => {
+        const asset = release.assets?.find((item) => item.name === el.dataset.releaseSize);
+        if (asset) el.textContent = `· ${Math.round(asset.size / 1_000_000)} Mo`;
+      });
+    })
+    .catch(() => { /* Keep the static text. */ });
+</script>

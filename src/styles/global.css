@@ -218,3 +218,56 @@ img { display: block; max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* Privacy summary, installation, team and legal pages */
+code { padding: .1rem .35rem; border-radius: .35rem; background: var(--surface-raised); font-size: .88em; }
+.faq-list details p a, .legal a, .final-cta small a { color: var(--cyan); text-decoration: underline; text-underline-offset: 3px; }
+.privacy-points { max-width: 570px; margin: 0; padding-left: 1.1rem; list-style: disc; color: var(--muted); line-height: 1.7; }
+.privacy-points li::marker { color: var(--cyan); }
+
+.install-layout { display: grid; grid-template-columns: 1.1fr .9fr; align-items: start; gap: 1.5rem; margin-top: 2.5rem; }
+.install-steps { display: grid; gap: .8rem; margin: 0; padding: 0; counter-reset: step; list-style: none; }
+.install-steps li { position: relative; padding: 1.1rem 1.2rem 1.1rem 4rem; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); counter-increment: step; }
+.install-steps li::before { position: absolute; top: 1.05rem; left: 1.1rem; display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid rgb(88 216 255 / 26%); border-radius: 11px; background: rgb(88 216 255 / 9%); color: var(--cyan); content: counter(step); font-size: .85rem; font-weight: 800; }
+.install-steps strong { display: block; font-size: .98rem; }
+.install-steps span { display: block; margin-top: .3rem; color: var(--muted); font-size: .88rem; line-height: 1.6; }
+.download-card { display: grid; gap: .55rem; padding: 1.5rem; border: 1px solid rgb(88 216 255 / 22%); border-radius: 22px; background: linear-gradient(145deg, rgb(61 115 255 / 13%), var(--surface) 70%); }
+.download-card-title { margin: 0 0 .4rem; font-weight: 750; }
+.download-card-meta { margin: 0 0 .5rem; color: var(--muted); font-size: .8rem; text-align: center; }
+.download-alt { display: flex; min-height: 48px; align-items: center; justify-content: center; padding: .7rem 1rem; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: .86rem; font-weight: 650; text-align: center; }
+.download-alt:hover { background: var(--surface-raised); }
+.download-card-help { margin: .3rem 0 0; color: var(--muted); font-size: .82rem; line-height: 1.6; }
+.install-help { margin-top: 1.5rem; }
+
+.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; margin-top: 2rem; }
+.team-card { display: flex; align-items: center; gap: .9rem; padding: 1.1rem; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); transition: background-color .2s ease; }
+.team-card:hover { background: var(--surface-raised); }
+.team-card img { width: 48px; height: 48px; flex: none; border-radius: 50%; background: var(--surface-raised); }
+.team-card strong { display: block; overflow-wrap: anywhere; font-size: .95rem; }
+.team-card small { display: block; margin-top: .2rem; color: var(--muted); font-size: .78rem; overflow-wrap: anywhere; }
+
+.legal { max-width: 760px; padding-block: 2.5rem 4rem; }
+.legal h1 { margin: .9rem 0 .6rem; font-size: clamp(2.2rem, 5vw, 3.4rem); letter-spacing: -.055em; line-height: 1.05; }
+.legal h2 { margin: 2.4rem 0 .7rem; font-size: 1.3rem; letter-spacing: -.03em; }
+.legal p, .legal li { color: var(--muted); line-height: 1.75; }
+.legal ul { padding-left: 1.2rem; list-style: disc; }
+.legal li { margin-bottom: .35rem; }
+.legal strong { color: var(--text); }
+.legal-updated { color: var(--muted); font-size: .88rem; }
+.legal-table { width: 100%; margin: 1rem 0; border-collapse: collapse; font-size: .88rem; }
+.legal-table th, .legal-table td { padding: .7rem .6rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.legal-table th { color: var(--text); font-weight: 700; }
+.legal-table td { color: var(--muted); line-height: 1.6; }
+
+@media (max-width: 860px) {
+  .install-layout { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 650px) {
+  .team-grid { grid-template-columns: 1fr; }
+  .legal-table, .legal-table tbody, .legal-table tr, .legal-table td { display: block; }
+  .legal-table thead { display: none; }
+  .legal-table tr { padding-block: .6rem; border-bottom: 1px solid var(--line); }
+  .legal-table td { padding: .15rem 0; border: 0; }
+  .legal-table td:first-child { color: var(--text); font-weight: 700; }
+}
