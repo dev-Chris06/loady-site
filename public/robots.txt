@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://loady-site.vercel.app/sitemap.xml

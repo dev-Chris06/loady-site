@@ -1,23 +1,32 @@
 # Plan complet — site vitrine Loady
 
-Document de travail mis à jour le 19 octobre 2026. Il décrit les étapes du cadrage actuel au déploiement du site sur Vercel. Le site sera dans son propre dépôt GitHub, séparé de celui de l’application.
+Document de travail mis à jour le 1er novembre 2026. Il décrit les étapes du cadrage au déploiement du site sur Vercel. Le site a son propre dépôt GitHub, séparé de celui de l’application.
 
 ## Avancement du site
 
-- Dépôt Git local initialisé dans `loady-site`; aucun dépôt GitHub distant ni déploiement Vercel n’est configuré.
-- Socle installé : Astro 7, Tailwind CSS 4, TypeScript 6; rendu statique.
-- Première version de la page d’accueil implémentée avec thème clair/sombre, navigation mobile, captures, plateformes, FAQ et CTA APK.
-- Espacement vertical resserré après comparaison des deux captures du hero : départ du hero réduit, padding vertical commun ramené à une échelle plus compacte et appel final ajusté. Les gouttières latérales et les marges internes des cartes n’ont pas été changées; revue visuelle complète encore à faire.
-- Vérifications locales : `astro check` sans erreurs/avertissements et `astro build` réussi.
-- **À régler avant publication :** le lien direct actuel pointe vers le dernier APK arm64 de GitHub Releases (v1.6.0), tandis que le code source de l’app indique `1.11.2+28`. Publier/confirmer la release correspondant à la version destinée aux visiteurs, puis mettre à jour et vérifier version, architecture, taille et signature affichées.
-- Politique de confidentialité détaillée, page d’installation dédiée, optimisation/anonymisation des captures, SEO final et URL Vercel restent à faire.
+- **En ligne** sur https://loady-site.vercel.app/, déployé par Vercel depuis le dépôt GitHub `dev-Chris06/loady-site` (branche `main`).
+- Socle : Astro 7, Tailwind CSS 4, TypeScript 6; rendu statique.
+- Page d’accueil unique (`src/pages/index.astro`) : navigation mobile, thème clair/sombre, hero, comment ça marche, fonctionnalités, captures, plateformes, encadré confidentialité, FAQ et appel final.
+- Captures utilisées : `3.jpg`, `4.jpg`, `5.jpg`, `10.jpg`, `11.jpg`.
+- Métadonnées : titre, description, URL canonique, Open Graph, favicon et `robots.txt`.
+- **Téléchargement APK réglé** : le bouton pointe vers `releases/latest/download/app-arm64-v8a-release.apk` du dépôt de l’app. Depuis la v1.14.0, chaque tag de l’app publie une Release GitHub (arm64 + 32 bits). Le lien suit donc toujours la dernière version (actuellement `1.15.4`).
+- Rappel : l’APK du site est une solution temporaire; l’objectif est la publication sur les stores.
 
-### Prochaine étape
+### Fait le 1er novembre 2026 (pas encore poussé)
 
-1. **Revue visuelle de la page locale** : ouvrir `http://localhost:4321/` et vérifier sur ordinateur et téléphone les thèmes clair/sombre, le hero, les captures, le menu mobile, les textes et la FAQ. Noter les retours puis ajuster la page.
-2. **Corriger le parcours APK** : confirmer la version de release à distribuer et remplacer le lien temporaire `v1.6.0` par le téléchargement direct correspondant; indiquer version, architecture et taille confirmées.
-3. **Préparer la publication** : anonymiser/optimiser les captures, finir les textes et la politique de confidentialité, compléter les métadonnées SEO et les pages d’aide.
-4. **Publier le dépôt et déployer** : créer/relier le dépôt GitHub séparé, connecter Vercel, vérifier la prévisualisation, puis publier sur l’URL `*.vercel.app`.
+- Section `#equipe` : Daziano TOGBEDJI, Christopher AHO GLELE et Fritzell AKOBI, avec lien GitHub.
+- Page `/confidentialite/` : politique détaillée, établie à partir du code de l’app 1.15.4 (Firebase Analytics, Firebase Cloud Messaging, vérification des versions sur GitHub, permissions). L’encadré `#confidentialite` de l’accueil, que l’app ouvre, la résume et y renvoie.
+- Section `#installer` : étapes, APK 64 bits et 32 bits, dépannage. La version et la taille des APK sont lues sur l’API GitHub au chargement de la page (texte fixe si l’API ne répond pas).
+- Android 7.0 minimum affiché près des boutons et dans la FAQ.
+- `site` réglé dans `astro.config.mjs` (URL canonique par page), image de partage `og-image.png`, `sitemap.xml`, `robots.txt` qui pointe vers le sitemap.
+- En-tête et pied de page partagés (`src/components/`), liens et équipe dans `src/data/site.ts`.
+
+### Reste à faire
+
+1. **Adresse e-mail dédiée** : la créer et la mettre dans `contact` (`src/data/site.ts`). En attendant, le contact est l’adresse Gmail de Christopher.
+2. **Durée de conservation Firebase** : vérifier la valeur réglée dans la console Firebase et l’écrire dans `/confidentialite/`.
+3. **Identifiant publicitaire** : Firebase Analytics peut le collecter (la politique le dit). Le désactiver dans l’app simplifierait la fiche Data Safety de Google Play.
+4. **Captures** : les reprendre si l’interface a changé depuis le 19/10 et vérifier qu’elles ne montrent aucune donnée privée.
 
 ## 1. Objectif et décisions de départ
 
@@ -133,7 +142,7 @@ Si cette page est redondante avec la FAQ finale, la fusionner dans l’accueil; 
 
 ### Étape 1 — Rassembler les éléments
 
-- Captures reçues dans `/home/dev-chris06/loady-site/public/images/` :
+- Captures reçues dans `public/images/` :
   - `3.jpg` : accueil en thème clair, 540 × 1170 px.
   - `4.jpg` : accueil en thème sombre, 540 × 1170 px.
   - `2.jpg` : historique en thème clair, 540 × 1170 px.
@@ -166,9 +175,9 @@ Si cette page est redondante avec la FAQ finale, la fusionner dans l’accueil; 
 
 **Livrable :** copy final de la page d’accueil et contenu de la page d’installation.
 
-### Étape 3 — Rendre l’APK prêt pour un CTA public
+### Étape 3 — Rendre l’APK prêt pour un CTA public — en grande partie fait
 
-Le code source est actuellement en `1.11.2+28`. Un build de cette version a été produit par GitHub Actions, tandis que les GitHub Releases visibles sont plus anciennes. Un artefact Actions est utile pour test, mais le bouton du site doit viser un lien officiel et durable.
+Depuis la v1.14.0 de l’app, chaque tag publie une Release GitHub avec les APK arm64 et `armeabi-v7a`. Le bouton du site pointe vers `releases/latest`, donc vers la dernière version. Restent : APK 32 bits, version/taille affichées et test du parcours sur téléphone.
 
 - Publier la version choisie comme asset APK d’une GitHub Release destinée aux utilisateurs.
 - Confirmer l’architecture servie, la version Android minimale et la taille exacte.
@@ -179,15 +188,15 @@ Le code source est actuellement en `1.11.2+28`. Un build de cette version a ét�
 
 **Livrable :** lien de téléchargement choisi et métadonnées APK à afficher près du CTA.
 
-### Étape 4 — Créer le dépôt du site — en cours
+### Étape 4 — Créer le dépôt du site — terminé
 
-- Conserver le site dans `/home/dev-chris06/loady-site`, séparé du dépôt de l’app.
+- Le site est dans `/home/dev-chris06/dev/Loady/loady-site`, séparé du dépôt de l’app.
 - Initialiser Git localement dans ce dossier seulement et ajouter un `.gitignore` adapté à Node/Astro. **Fait.**
-- Créer un dépôt GitHub distinct `loady-site` et définir sa branche principale. **À faire.**
+- Créer un dépôt GitHub distinct `loady-site` et définir sa branche principale. **Fait** : `dev-Chris06/loady-site`, branche `main`.
 - Ne pas importer l’historique ou les fichiers secrets du dépôt de l’application.
 - Ajouter un README avec prérequis, commandes de développement, build et déploiement.
 
-**Livrable :** dépôt local séparé prêt; dépôt GitHub distant restant à créer.
+**Livrable obtenu :** dépôt GitHub séparé avec README.
 
 ### Étape 5 — Initialiser le socle technique — terminé
 
@@ -235,7 +244,7 @@ Le code source est actuellement en `1.11.2+28`. Un build de cette version a ét�
 
 **Livrable :** checklist de recette remplie et version prête à publier.
 
-### Étape 9 — Déployer sur Vercel
+### Étape 9 — Déployer sur Vercel — fait
 
 - Connecter le dépôt GitHub séparé à un projet Vercel.
 - Configurer la commande de build Astro et le dossier de sortie statique selon le scaffold généré.
@@ -245,7 +254,7 @@ Le code source est actuellement en `1.11.2+28`. Un build de cette version a ét�
 - Vérifier HTTPS, redirections, pages 404, sitemap, aperçu social et lien APK depuis un réseau mobile.
 - Réserver la connexion d’un domaine personnalisé à une étape ultérieure si souhaité.
 
-**Livrable :** site publié et vérifié sur son URL Vercel.
+**Livrable obtenu :** site publié sur https://loady-site.vercel.app/. Reste à refaire la vérification complète (liens, 404, aperçu social, APK depuis un réseau mobile) après les ajouts ci-dessus.
 
 ## 4. Critères de fin
 
