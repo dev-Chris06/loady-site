@@ -20,6 +20,7 @@ Document de travail mis à jour le 1er novembre 2026. Il décrit les étapes du 
 - Android 7.0 minimum affiché près des boutons et dans la FAQ.
 - `site` réglé dans `astro.config.mjs` (URL canonique par page), image de partage `og-image.png`, `sitemap.xml`, `robots.txt` qui pointe vers le sitemap.
 - En-tête et pied de page partagés (`src/components/`), liens et équipe dans `src/data/site.ts`.
+- Page `/conditions/` (conditions d’utilisation, droits d’auteur), ouverte par l’app à partir de la 1.16.0 (réglages et fenêtre du premier lancement).
 
 ### Reste à faire
 

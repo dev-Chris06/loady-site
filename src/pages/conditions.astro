@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { contact, links, termsUpdated } from "../data/site";
+---
+
+<BaseLayout
+  title="Conditions d’utilisation — Loady"
+  description="Les règles d’utilisation de l’application Loady : droits d’auteur, conditions des plateformes, absence de garantie et licence."
+>
+  <SiteHeader />
+
+  <main id="main">
+    <article class="container legal">
+      <span class="eyebrow">Conditions</span>
+      <h1>Conditions d’utilisation</h1>
+      <p class="legal-updated">Dernière mise à jour : {termsUpdated}</p>
+
+      <p>Ces conditions s’appliquent à l’application Android <strong>Loady</strong>. En l’utilisant, tu les acceptes. Elles reprennent et détaillent le rappel affiché au premier lancement de l’app.</p>
+
+      <h2>Ce que fait Loady</h2>
+      <p>Loady analyse un lien que tu lui donnes et enregistre la vidéo correspondante comme un fichier sur ton téléphone. Loady ne stocke aucun contenu sur un serveur : le téléchargement se fait directement entre ton téléphone et la plateforme.</p>
+
+      <h2>Droits d’auteur</h2>
+      <p>Les vidéos publiées sur les plateformes appartiennent à leurs auteurs. <strong>Tu restes seul responsable de ce que tu télécharges et de ce que tu en fais.</strong> En pratique :</p>
+      <ul>
+        <li>télécharge uniquement des contenus que tu as créés, qui sont libres de droits, ou que leur auteur t’autorise à enregistrer ;</li>
+        <li>garde les fichiers pour un usage personnel ;</li>
+        <li>ne republie pas, ne partage pas publiquement et ne vends pas un contenu sans l’autorisation de son auteur ;</li>
+        <li>ne contourne pas une protection (contenu payant, privé ou réservé à des abonnés).</li>
+      </ul>
+      <p>Les règles exactes dépendent de la loi de ton pays. En cas de doute, ne télécharge pas.</p>
+
+      <h2>Conditions des plateformes</h2>
+      <p>Chaque plateforme (YouTube, TikTok, Instagram, Snapchat, Facebook, X, Pinterest, Threads) a ses propres conditions d’utilisation, et certaines interdisent ou limitent le téléchargement. Il t’appartient de les respecter.</p>
+      <p>Loady n’est lié à aucune de ces plateformes, et n’est ni approuvé ni soutenu par elles. Leurs noms et logos appartiennent à leurs propriétaires et servent uniquement à indiquer les liens que Loady sait lire.</p>
+
+      <h2>Usages interdits</h2>
+      <ul>
+        <li>Télécharger ou diffuser des contenus illégaux.</li>
+        <li>Utiliser Loady pour du téléchargement massif ou automatisé, ou pour surcharger une plateforme.</li>
+        <li>Distribuer une version modifiée de Loady en la faisant passer pour la version officielle.</li>
+      </ul>
+
+      <h2>Aucune garantie</h2>
+      <p>Loady est fourni <strong>tel quel</strong>, gratuitement et sans aucune garantie. Les plateformes changent souvent leur fonctionnement : un lien peut cesser de fonctionner du jour au lendemain, une qualité peut ne plus être proposée, un téléchargement peut échouer. L’équipe Loady ne peut pas être tenue responsable d’un contenu téléchargé, d’une perte de données ou d’un problème sur ton appareil, dans les limites prévues par la loi.</p>
+
+      <h2>Licence et code source</h2>
+      <p>Loady est un logiciel libre publié sous la licence <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU GPL version 3 ou ultérieure</a>. Son <a href={links.repo}>code source</a> est public. Ces conditions encadrent l’utilisation de l’app ; elles ne limitent pas les droits que la licence te donne sur le code.</p>
+
+      <h2>Données personnelles</h2>
+      <p>Les données utilisées par l’app sont décrites dans la <a href="/confidentialite/">politique de confidentialité</a>.</p>
+
+      <h2>Modifications</h2>
+      <p>Ces conditions peuvent évoluer avec l’app. La date en haut de la page change à chaque mise à jour. Si un changement est important, l’app te le rappellera.</p>
+
+      <h2>Contact</h2>
+      <p>Pour toute question, ou pour signaler un usage abusif de Loady : <a href={contact.href}>{contact.label}</a>.</p>
+
+      <p><a href="/">← Retour à l’accueil</a></p>
+    </article>
+  </main>
+
+  <SiteFooter />
+</BaseLayout>

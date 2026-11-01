@@ -28,3 +28,4 @@ export const team = [
 ];
 
 export const privacyUpdated = "1er novembre 2026";
+export const termsUpdated = "1er novembre 2026";
